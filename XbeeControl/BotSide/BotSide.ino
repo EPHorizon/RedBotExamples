@@ -1,5 +1,12 @@
 #include <RedBot.h>
 
+#define FORWARD 0x1
+#define BACKWARD 0x2
+#define RIGHT 0x3
+#define LEFT 0x4
+#define BANK_RIGHT 0x5
+#define BANK_LEFT 0x5
+
 RedBotMotor motor;
 RedBotSoftwareSerial link;
 
@@ -12,30 +19,33 @@ void setup() {
 void loop() {
   
   int distanceValue = (analogRead(A2));
-  String command;
   
-  while (link.available() > 0){
-    char letter = Serial.read();
-    command+= letter;
+  if (Serial.available() > 0){
+    executeCommand();
   }
+}
   
-  if (command == "bankright"){
+  
+void executeCommand(){
+  int command = Serial.read();
+  
+  if (command == BANK_RIGHT){
     motor.rightDrive(128);
     motor.leftDrive(255);
   }
-  else if (command == "bankleft"){
+  else if (command == BANK_LEFT){
     motor.rightDrive(255);
     motor.leftDrive(128);
   }
-  else if (command == "forward"){
+  else if (command == FORWARD){
     motor.rightDrive(255);
     motor.leftDrive(255);
   }
-  else if (command == "right"){
+  else if (command == RIGHT){
     motor.rightDrive(-255);
     motor.leftDrive(255);
   }
-  else if (command == "left"){
+  else if (command == LEFT){
     motor.rightDrive(255);
     motor.leftDrive(-255);
   }

@@ -1,3 +1,9 @@
+#define FORWARD 0x1
+#define BACKWARD 0x2
+#define RIGHT 0x3
+#define LEFT 0x4
+#define BANK_RIGHT 0x5
+#define BANK_LEFT 0x5
 
 const int forwardButton = 3;
 const int rightButton = 2;
@@ -19,19 +25,19 @@ void loop() {
   leftState = digitalRead(leftButton);
   
   if ((forwardState == LOW) && (rightState == LOW)){
-    Serial.print("bankright");
+    Serial.write(BANK_RIGHT);
   }
   else if ((forwardState == LOW) && (leftState == LOW)){
-    Serial.print("bankleft");
+    Serial.write(BANK_LEFT);
   }
   else if (forwardState == LOW){
-    Serial.print("forward");
+    Serial.write(FORWARD);
   }
   else if (rightState == LOW){
-    Serial.print("right");
+    Serial.write(RIGHT);
   }
   else if (leftState == LOW){
-    Serial.print("left");
+    Serial.write(LEFT);
   }
     
   
